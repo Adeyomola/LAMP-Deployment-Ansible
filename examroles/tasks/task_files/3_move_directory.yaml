@@ -1,0 +1,10 @@
+---
+- name: move to /var/www/html
+  copy:
+    src: /home/{{ansible_user}}/laravel-realworld-example-app
+    remote_src: yes
+    dest: /var/www/html/
+    directory_mode: yes
+    owner: www-data
+    group: www-data
+    mode: 0755

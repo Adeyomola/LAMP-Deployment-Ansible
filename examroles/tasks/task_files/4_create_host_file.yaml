@@ -1,0 +1,26 @@
+---
+- name: populate service facts
+  service_facts:
+- name: move to sites-available
+  template:
+    src: laravel.conf.j2
+    dest: /etc/apache2/sites-available/laravel.conf
+- name: disable default site
+  command: a2dissite 000-default.conf
+  when: ansible_facts.services['apache2.service'].status == 'enabled'
+  notify:
+    - reload apache
+- name: enable rewrite
+  apache2_module:
+    state: present
+    name: rewrite
+    ignore_configcheck: true
+    identifier: rewrite_module
+  when: ansible_facts.services['apache2.service'].status == 'enabled'
+  notify:
+    - reload apache
+- name: enable laravel.conf
+  command: a2ensite laravel.conf
+  when: ansible_facts.services['apache2.service'].status == 'enabled'
+  notify:
+    - reload apache

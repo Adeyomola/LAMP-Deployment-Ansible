@@ -1,0 +1,32 @@
+---
+# tasks file for examroles
+- name: Install Apache
+  import_tasks: task_files/install-apache.yaml
+- name: Install PHP
+  import_tasks: task_files/install-php.yaml
+- name: Install Composer
+  import_tasks: task_files/install-composer.yaml
+- name: Install MySQL
+  import_tasks: task_files/install-mysql.yaml
+- name: Clone the Repo
+  import_tasks: task_files/1_clone_repo.yaml
+- name: Install Laravel Dependencies
+  import_tasks: task_files/2_install_laravel.yaml
+- name: Move Project Directory to Web Root
+  import_tasks: task_files/3_move_directory.yaml
+- name: Create Host File
+  import_tasks: task_files/4_create_host_file.yaml
+- name: Configure the Database
+  import_tasks: task_files/5_config_db.yaml
+- name: Edit Laravel Environment Variables
+  import_tasks: task_files/6_edit_environment_variables.yaml
+- name: Seed the Database
+  import_tasks: task_files/7_seeding.yaml
+- name: Install SSL certificate
+  import_tasks: task_files/8_install_ssl.yaml
+- name: Install PostgresQL
+  import_tasks: task_files/9_run_pgsql_script.yaml
+- name: Create 443 vhost
+  import_tasks: task_files/10_create443vhost.yaml
+- name: App Optimization
+  import_tasks: task_files/11_make_app_production_ready.yaml

@@ -1,0 +1,39 @@
+---
+- name: Populate service facts
+  service_facts:
+
+- name: Check if ssl certificate file exists
+  stat:
+    path: "{{cert_path}}"
+  register: cert
+
+- name: Check if ssl certificate key file exists
+  stat:
+    path: "{{key_path}}"
+  register: key
+
+- name: move to sites-available
+  template:
+    src: laravel_secure.conf.j2
+    dest: /etc/apache2/sites-available/laravel_secure.conf
+  when: cert.stat.exists and key.stat.exists
+
+- name: Check if 443 vhost file exists
+  stat:
+    path: /etc/apache2/sites-available/laravel_secure.conf
+  register: vhost
+
+- name: enable laravel_secure.conf
+  command: a2ensite laravel_secure.conf
+  when: ansible_facts.services['apache2.service'].status == 'enabled' and vhost.stat.exists
+  notify:
+    - reload apache
+
+- name: enable ssl
+  apache2_module:
+    state: present
+    name: ssl
+    identifier: ssl_module
+  when: ansible_facts.services['apache2.service'].status == 'enabled' and vhost.stat.exists
+  notify:
+    - reload apache

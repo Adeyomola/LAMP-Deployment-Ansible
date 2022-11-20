@@ -1,0 +1,16 @@
+---
+- name: copy
+  copy:
+    src: ~/.ssh/script_password
+    dest: ~/.ssh/script_password
+    owner: "{{ansible_user}}"
+    group: "{{ansible_user}}"
+    mode: "0400"
+  no_log: true
+- name: Install PostgresQL
+  script: pgsql.sh
+  args:
+    executable: bash
+  register: psql
+  failed_when: psql.rc != 0 and psql.rc != 1
+  ignore_errors: "{{ ansible_check_mode }}"

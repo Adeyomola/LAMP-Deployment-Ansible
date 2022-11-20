@@ -1,0 +1,7 @@
+---
+- name: Clone the repo
+  git:
+    repo: https://github.com/f1amy/laravel-realworld-example-app.git
+    dest: "{{remote_project_dir}}"
+    version: main
+  become: false

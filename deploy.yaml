@@ -1,0 +1,5 @@
+- name: Laravel App Deployment
+  hosts: ApacheServer
+  become: true
+  roles:
+    - deployment

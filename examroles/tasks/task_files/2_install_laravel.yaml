@@ -1,0 +1,6 @@
+---
+- name: Install laravel dependencies
+  command: composer create-project
+  args:
+    chdir: "{{remote_project_dir}}"
+  become: false

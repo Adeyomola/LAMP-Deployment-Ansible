@@ -1,0 +1,27 @@
+---
+  - name: Populate service facts
+    service_facts:
+  - name: Check if ssl certificate file exists
+    stat:
+      path: "{{cert_path}}"
+    register: cert
+
+  - name: Check if ssl certificate key file exists
+    stat:
+      path: "{{key_path}}"
+    register: key
+  - name: install snapd
+    package:
+       update_cache: yes
+       name: snapd
+       state: present
+  - name: ensure snapd is up to date, install certbot, and install ssl cert
+    command: "{{ item }}"
+    with_items:
+       - snap install core
+       - snap refresh core
+       - snap install --classic certbot
+       - ln -sf /snap/bin/certbot /usr/bin/certbot
+       - certbot --apache --agree-tos --redirect -m {{email_address}} -d {{domain_name}}
+    ignore_errors: true
+    when: key.stat.exists == False and cert.stat.exists == False

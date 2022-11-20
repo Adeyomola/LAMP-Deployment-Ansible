@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerAdmin {{ email_address }}
+    ServerName {{ domain_name }}
+
+    DocumentRoot {{ webroot_project }}/public/
+
+    <Directory {{ webroot_project }}/public/>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+

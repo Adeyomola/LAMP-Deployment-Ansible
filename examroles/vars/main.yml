@@ -1,0 +1,12 @@
+---
+# vars file for examroles
+mysql_user: medium
+mysql_password: medium
+database_name: database
+remote_project_dir: ~/laravel-realworld-example-app
+webroot_project: /var/www/html/laravel-realworld-example-app
+project_env: /var/www/html/laravel-realworld-example-app/.env
+domain_name: examination.adeyomola.me
+email_address: test@example.com
+cert_path: /etc/letsencrypt/live/{{domain_name}}/cert.pem
+key_path: /etc/letsencrypt/live/{{domain_name}}/privkey.pem
