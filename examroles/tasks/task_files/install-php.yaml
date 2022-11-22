@@ -20,6 +20,7 @@
     name:
       - php8.1
       - php8.1-bcmath
+      - php-json
       - php-common
       - php8.1-curl
       - libapache2-mod-php8.1
